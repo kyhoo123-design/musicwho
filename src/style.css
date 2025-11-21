@@ -30,40 +30,106 @@ body {
   background: linear-gradient(135deg, #ff6f91 0%, #ff9671 40%, #ffc75f 70%, #f9f871 100%);
   animation: bg-move 10s ease-in-out infinite alternate;
 }
-
-@keyframes bg-move {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
-}
-
-.profile-container {
-  max-width: 600px;
-  margin: 60px auto;
-  background: rgba(255,255,255,0.85);
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-  padding: 40px 32px;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.profile-header h1 {
-  font-size: 2.5rem;
-  background: linear-gradient(90deg, #ff6f91, #ffc75f, #f9f871);
+  font-size: 2.7rem;
+  background: linear-gradient(90deg, #ff6f91, #ffc75f, #f9f871 80%, #ff6f91);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
+  letter-spacing: 2px;
+  text-shadow: 0 0 16px #ff6f91cc, 0 0 32px #ffc75f88;
+  animation: neon-flicker 2.5s infinite alternate;
 }
 
-.profile-intro p {
+@keyframes neon-flicker {
+  0%, 100% { text-shadow: 0 0 16px #ff6f91cc, 0 0 32px #ffc75f88; }
+  50% { text-shadow: 0 0 32px #ffc75f, 0 0 64px #ff6f91; }
+}
+  max-width: 600px;
+  margin: 60px auto;
+  font-size: 1.25rem;
+  color: #333;
+  margin-bottom: 36px;
+  background: linear-gradient(90deg, #ff9671 0%, #ffc75f 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  font-weight: 600;
+  text-shadow: 0 2px 8px #ffc75f33;
+}
+  padding: 40px 32px;
+  text-align: center;
+  font-size: 1.6rem;
+  color: #ff6f91;
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+  text-shadow: 0 0 8px #ff6f91aa, 0 0 16px #ffc75f66;
+  position: relative;
+}
+
+#career-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 400px;
+}
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #ff6f91, #ffc75f, #f9f871);
+  background: linear-gradient(90deg, #ff9671 0%, #ffc75f 100%);
+  color: #fff;
+  margin: 12px 0;
+  padding: 12px 22px 12px 48px;
+  border-radius: 16px;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(255,111,145,0.10), 0 1.5px 6px rgba(255,199,95,0.10);
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+  font-size: 1.08rem;
+  letter-spacing: 0.5px;
+  overflow: visible;
+}
+
+#career-list li::before {
+  content: '\1F3B5'; /* 음악 아이콘 */
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%) scale(1.2);
+  font-size: 1.3em;
+  filter: drop-shadow(0 0 6px #ffc75f88);
+  animation: icon-bounce 1.8s infinite alternate;
+}
+
+@keyframes icon-bounce {
+  0% { transform: translateY(-50%) scale(1.2); }
+  100% { transform: translateY(-60%) scale(1.35); }
+}
   font-size: 1.2rem;
   color: #333;
-  margin-bottom: 32px;
+  transform: scale(1.07) rotate(-1deg);
+  background: linear-gradient(90deg, #f9f871 0%, #ff6f91 100%);
+  color: #ff6f91;
+  box-shadow: 0 8px 32px #ff6f9199, 0 2px 8px #ffc75f99;
 }
 
+/* 움직이는 배경 패턴 (추가) */
+body::before {
+  content: '';
+  position: fixed;
+  left: 0; top: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: repeating-radial-gradient(circle at 20% 30%, #fff7 0 2px, transparent 2px 80px),
+              repeating-radial-gradient(circle at 80% 70%, #fff5 0 1.5px, transparent 1.5px 60px);
+  animation: pattern-move 12s linear infinite alternate;
+}
+
+@keyframes pattern-move {
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 80px 60px, -60px -40px; }
+}
 .profile-career h2 {
   font-size: 1.5rem;
   color: #ff6f91;
