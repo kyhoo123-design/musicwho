@@ -27,46 +27,153 @@ body {
   min-width: 320px;
   min-height: 100vh;
   font-family: 'Segoe UI', 'Pretendard', Arial, sans-serif;
-  background: linear-gradient(135deg, #ff6f91 0%, #ff9671 40%, #ffc75f 70%, #f9f871 100%);
+  background: linear-gradient(135deg, #ffd6e0 0%, #f9f9c5 40%, #b5ead7 70%, #c7ceea 100%);
   animation: bg-move 10s ease-in-out infinite alternate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-  font-size: 2.7rem;
-  background: linear-gradient(90deg, #ff6f91, #ffc75f, #f9f871 80%, #ff6f91);
+
+/* profile-container: 모바일 최적화, 파스텔톤, 입체감 */
+.profile-container {
+  width: 95vw;
+  max-width: 420px;
+  margin: 32px auto;
+  background: linear-gradient(120deg, #fff1f8 0%, #e0f7fa 100%);
+  border-radius: 32px;
+  box-shadow: 0 8px 32px 0 rgba(197, 206, 234, 0.25), 0 2px 8px 0 rgba(181, 234, 215, 0.18);
+  padding: 36px 18px 40px 18px;
+  text-align: center;
+  position: relative;
+  overflow: visible;
+  z-index: 1;
+  backdrop-filter: blur(2px);
+  border: 2.5px solid #fff6;
+  animation: floaty 3.5s ease-in-out infinite alternate;
+}
+
+.profile-header h1 {
+  font-size: 2.1rem;
+  background: linear-gradient(90deg, #ffb5e8, #b5ead7, #c7ceea 80%, #ffb5e8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
   margin-bottom: 18px;
   letter-spacing: 2px;
-  text-shadow: 0 0 16px #ff6f91cc, 0 0 32px #ffc75f88;
+  text-shadow: 0 0 16px #ffb5e8cc, 0 0 32px #b5ead799;
   animation: neon-flicker 2.5s infinite alternate;
 }
 
-@keyframes neon-flicker {
-  0%, 100% { text-shadow: 0 0 16px #ff6f91cc, 0 0 32px #ffc75f88; }
-  50% { text-shadow: 0 0 32px #ffc75f, 0 0 64px #ff6f91; }
+@keyframes floaty {
+  0% { transform: translateY(0px) scale(1); }
+  100% { transform: translateY(-12px) scale(1.03); }
 }
-  max-width: 600px;
-  margin: 60px auto;
-  font-size: 1.25rem;
-  color: #333;
-  margin-bottom: 36px;
-  background: linear-gradient(90deg, #ff9671 0%, #ffc75f 100%);
+
+@keyframes neon-flicker {
+  0%, 100% { text-shadow: 0 0 16px #ffb5e8cc, 0 0 32px #b5ead799; }
+  50% { text-shadow: 0 0 32px #b5ead7, 0 0 64px #ffb5e8; }
+}
+
+.profile-intro p {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 28px;
+  background: linear-gradient(90deg, #b5ead7 0%, #c7ceea 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
   font-weight: 600;
-  text-shadow: 0 2px 8px #ffc75f33;
+  text-shadow: 0 2px 8px #b5ead733;
 }
-  padding: 40px 32px;
-  text-align: center;
-  font-size: 1.6rem;
-  color: #ff6f91;
-  margin-bottom: 16px;
-  letter-spacing: 1px;
-  text-shadow: 0 0 8px #ff6f91aa, 0 0 16px #ffc75f66;
+
+.profile-career h2 {
+  padding: 0;
+  margin: 0 auto;
+  max-width: 340px;
+}
+
+#career-list li {
+  background: linear-gradient(90deg, #f9f9c5 0%, #b5ead7 100%);
+  color: #7a7a7a;
+  margin: 10px 0;
+  padding: 12px 22px 12px 48px;
+  border-radius: 18px;
+  font-weight: 600;
+  box-shadow: 0 2px 12px #b5ead755, 0 1.5px 6px #c7ceea55;
+  transition: transform 0.2s, box-shadow 0.2s;
   position: relative;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+  overflow: visible;
+}
+
+#career-list li::before {
+  content: '\1F3B5'; /* 음악 아이콘 */
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%) scale(1.1);
+  font-size: 1.2em;
+  filter: drop-shadow(0 0 6px #b5ead799);
+  animation: icon-bounce 1.8s infinite alternate;
+}
+
+@keyframes icon-bounce {
+  0% { transform: translateY(-50%) scale(1.1); }
+  100% { transform: translateY(-60%) scale(1.22); }
+}
+
+#career-list li:hover {
+  transform: scale(1.04) rotate(-1deg);
+  background: linear-gradient(90deg, #c7ceea 0%, #ffb5e8 100%);
+  color: #ffb5e8;
+  box-shadow: 0 8px 32px #c7ceea99, 0 2px 8px #ffb5e899;
+}
+
+/* 움직이는 파스텔톤 배경 패턴 */
+body::before {
+  content: '';
+  position: fixed;
+  left: 0; top: 0; right: 0; bottom: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: repeating-radial-gradient(circle at 20% 30%, #fff7 0 2.5px, transparent 2.5px 80px),
+              repeating-radial-gradient(circle at 80% 70%, #b5ead7aa 0 2px, transparent 2px 60px),
+              repeating-radial-gradient(circle at 60% 10%, #ffb5e8aa 0 2.5px, transparent 2.5px 70px);
+  animation: pattern-move 14s linear infinite alternate;
+}
+
+@keyframes pattern-move {
+  0% { background-position: 0 0, 0 0, 0 0; }
+  100% { background-position: 80px 60px, -60px -40px, 40px 80px; }
+}
+
+@media (max-width: 600px) {
+  .profile-container {
+    padding: 18vw 2vw 20vw 2vw;
+    border-radius: 7vw;
+    max-width: 98vw;
+  }
+  .profile-header h1 {
+    font-size: 1.3rem;
+  }
+  .profile-intro p {
+    font-size: 0.98rem;
+  }
+  #career-list li {
+    font-size: 0.95rem;
+    padding: 10px 12px 10px 36px;
+    border-radius: 12px;
+  }
+}
+}
+
+@keyframes neon-flicker {
+  0%, 100% { text-shadow: 0 0 16px #ff6f91cc, 0 0 32px #ffc75f88; }
+  50% { text-shadow: 0 0 32px #ffc75f, 0 0 64px #ff6f91; }
 }
 
 #career-list {
@@ -74,21 +181,6 @@ body {
   padding: 0;
   margin: 0 auto;
   max-width: 400px;
-}
-  font-size: 2.5rem;
-  background: linear-gradient(90deg, #ff6f91, #ffc75f, #f9f871);
-  background: linear-gradient(90deg, #ff9671 0%, #ffc75f 100%);
-  color: #fff;
-  margin: 12px 0;
-  padding: 12px 22px 12px 48px;
-  border-radius: 16px;
-  font-weight: 600;
-  box-shadow: 0 4px 16px rgba(255,111,145,0.10), 0 1.5px 6px rgba(255,199,95,0.10);
-  transition: transform 0.2s, box-shadow 0.2s;
-  position: relative;
-  font-size: 1.08rem;
-  letter-spacing: 0.5px;
-  overflow: visible;
 }
 
 #career-list li::before {
@@ -105,13 +197,6 @@ body {
 @keyframes icon-bounce {
   0% { transform: translateY(-50%) scale(1.2); }
   100% { transform: translateY(-60%) scale(1.35); }
-}
-  font-size: 1.2rem;
-  color: #333;
-  transform: scale(1.07) rotate(-1deg);
-  background: linear-gradient(90deg, #f9f871 0%, #ff6f91 100%);
-  color: #ff6f91;
-  box-shadow: 0 8px 32px #ff6f9199, 0 2px 8px #ffc75f99;
 }
 
 /* 움직이는 배경 패턴 (추가) */
