@@ -3,22 +3,22 @@ import javascriptLogo from './javascript.svg'
 import viteLogo from '/vite.svg'
 import { setupCounter } from './counter.js'
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
 
-setupCounter(document.querySelector('#counter'))
+// 예시: 자기소개와 경력 데이터
+const introText = '안녕하세요! 저는 창의적인 개발자입니다. 음악과 코딩을 사랑하며, 다양한 프로젝트에 도전하는 것을 즐깁니다.';
+const careers = [
+  '2023 - 음악 추천 서비스 개발',
+  '2022 - 웹 기반 게임 제작',
+  '2021 - 오픈소스 커뮤니티 활동',
+];
+
+// DOM에 데이터 반영
+document.getElementById('intro-text').textContent = introText;
+
+const careerList = document.getElementById('career-list');
+careerList.innerHTML = '';
+careers.forEach(item => {
+  const li = document.createElement('li');
+  li.textContent = item;
+  careerList.appendChild(li);
+});
