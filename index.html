@@ -230,5 +230,106 @@
       .bottom-nav {
         position: sticky;
         bottom: 0;
-        z-index:
+        z-index: 10;
+        background: rgba(15, 23, 42, 0.97);
+        border-top: 1px solid rgba(31, 41, 55, 0.9);
+        padding: 6px 10px calc(6px + env(safe-area-inset-bottom));
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+      }
 
+      .nav-item {
+        flex: 1;
+        text-align: center;
+        font-size: 11px;
+        color: var(--text-sub);
+        padding: 6px 0;
+      }
+
+      .nav-item.active {
+        color: #e5e7eb;
+      }
+
+      .nav-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        margin: 0 auto 2px;
+        background: transparent;
+      }
+
+      .nav-item.active .nav-dot {
+        background: linear-gradient(135deg, var(--accent), var(--accent3));
+        box-shadow: 0 0 10px rgba(96, 165, 250, 0.9);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <!-- 상단 앱바 -->
+      <header class="app-bar">
+        <div class="app-bar-logo">🎧</div>
+        <div class="app-bar-title">
+          <h1>김영후의 음악교실</h1>
+          <span>Music · Education · AI</span>
+        </div>
+      </header>
+
+      <!-- 메인 화면 -->
+      <main class="screen">
+        <!-- 프로필 카드 -->
+        <section class="profile-card">
+          <div class="profile-header">
+            <div class="profile-name">김영후</div>
+            <span class="profile-tag">중등 음악교사 · AI 수업</span>
+          </div>
+          <p id="intro-text" class="profile-intro-text">
+            여기에 간단한 자기 소개를 입력하세요.
+          </p>
+          <div class="intro-chips">
+            <div class="chip">🎼 중학교 음악수업</div>
+            <div class="chip">🧠 AI·디지털 기반 수업</div>
+            <div class="chip">🎤 합창·뮤지컬 지도</div>
+          </div>
+        </section>
+
+        <!-- 경력 카드 -->
+        <section class="career-card">
+          <h2 class="section-title">경력</h2>
+          <ul id="career-list">
+            <li>
+              경력을 추가하세요.
+              <!--
+              예시)
+              <div class="career-meta">
+                <span>서울 ○○중학교</span>
+                <span>음악교사</span>
+                <span>2015–2025</span>
+              </div>
+              -->
+            </li>
+          </ul>
+        </section>
+      </main>
+
+      <!-- 하단 네비게이션 바 (앱 느낌용)-->
+      <nav class="bottom-nav">
+        <div class="nav-item active">
+          <div class="nav-dot"></div>
+          홈
+        </div>
+        <div class="nav-item">
+          <div class="nav-dot"></div>
+          수업
+        </div>
+        <div class="nav-item">
+          <div class="nav-dot"></div>
+          연구
+        </div>
+      </nav>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
