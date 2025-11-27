@@ -1,24 +1,426 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>김영후의 음악교실</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --bg-main: #050816;
+        --accent: #ff6bcb;
+        --accent2: #7b5cff;
+        --accent3: #00ffd1;
+        --card-bg: rgba(16, 18, 40, 0.85);
+        --border-glow: rgba(255, 255, 255, 0.15);
+        --text-main: #f9fafb;
+        --text-sub: #a5b4fc;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        min-height: 100vh;
+        font-family: "Noto Sans KR", system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, #1f2933 0, var(--bg-main) 45%)
+          fixed;
+        color: var(--text-main);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* 움직이는 컬러 오브젝트 */
+      body::before,
+      body::after {
+        content: "";
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(40px);
+        opacity: 0.55;
+        mix-blend-mode: screen;
+        pointer-events: none;
+      }
+
+      body::before {
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle, var(--accent) 0, transparent 70%);
+        top: -80px;
+        right: -40px;
+        animation: floatA 18s infinite alternate ease-in-out;
+      }
+
+      body::after {
+        width: 520px;
+        height: 520px;
+        background: radial-gradient(circle, var(--accent2) 0, transparent 70%);
+        bottom: -120px;
+        left: -80px;
+        animation: floatB 22s infinite alternate ease-in-out;
+      }
+
+      #app {
+        width: 100%;
+        max-width: 960px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .profile-container {
+        border-radius: 32px;
+        padding: 28px 28px 24px;
+        background: radial-gradient(circle at top left, rgba(123, 92, 255, 0.3), transparent 55%),
+          radial-gradient(circle at bottom right, rgba(0, 255, 209, 0.2), transparent 60%),
+          var(--card-bg);
+        border: 1px solid var(--border-glow);
+        box-shadow:
+          0 24px 60px rgba(0, 0, 0, 0.75),
+          0 0 0 1px rgba(148, 163, 253, 0.15);
+        backdrop-filter: blur(22px);
+        -webkit-backdrop-filter: blur(22px);
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(260px, 2.5fr);
+        gap: 28px;
+        animation: floatUp 0.85s ease-out;
+      }
+
+      /* 헤더 영역 */
+      .profile-header {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 4px;
+      }
+
+      .profile-header h1 {
+        font-size: clamp(2.1rem, 2.5vw + 1.3rem, 2.8rem);
+        font-weight: 900;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        background: linear-gradient(120deg, #f9fafb, #e5e7eb, #a5b4fc, #f97316);
+        background-size: 220% 220%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: shine 9s linear infinite;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .profile-header h1::before {
+        content: "🎧";
+        filter: drop-shadow(0 0 12px rgba(248, 250, 252, 0.75));
+      }
+
+      .profile-tagline {
+        font-size: 0.9rem;
+        color: var(--text-sub);
+        text-align: right;
+        border-radius: 999px;
+        padding: 6px 14px;
+        background: rgba(15, 23, 42, 0.75);
+        border: 1px solid rgba(148, 163, 253, 0.4);
+        box-shadow: 0 0 18px rgba(96, 165, 250, 0.35);
+        white-space: nowrap;
+      }
+
+      /* 인트로 영역 */
+      .profile-intro {
+        padding: 18px 20px;
+        border-radius: 24px;
+        background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.12), transparent 60%),
+          rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 253, 0.5);
+        box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.9);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .profile-intro::before {
+        content: "INTRO";
+        position: absolute;
+        top: 10px;
+        right: 16px;
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        color: rgba(148, 163, 253, 0.4);
+      }
+
+      #intro-text {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #e5e7eb;
+      }
+
+      .intro-chips {
+        margin-top: 14px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .chip {
+        font-size: 0.78rem;
+        padding: 4px 10px;
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 253, 0.6);
+        background: radial-gradient(circle at top left, rgba(129, 140, 248, 0.3), transparent 60%),
+          rgba(15, 23, 42, 0.9);
+        color: #e5e7eb;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .chip span {
+        font-size: 0.9em;
+      }
+
+      /* 경력(타임라인) 영역 */
+      .profile-career {
+        padding: 18px 20px;
+        border-radius: 24px;
+        background: rgba(6, 15, 39, 0.96);
+        border: 1px solid rgba(55, 65, 81, 0.9);
+        box-shadow:
+          0 18px 40px rgba(15, 23, 42, 0.9),
+          inset 0 0 0 1px rgba(15, 23, 42, 0.9);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .profile-career h2 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .profile-career h2::before {
+        content: "";
+        width: 18px;
+        height: 18px;
+        border-radius: 999px;
+        background: conic-gradient(from 160deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
+        box-shadow: 0 0 16px rgba(94, 234, 212, 0.9);
+      }
+
+      .profile-career h2::after {
+        content: "CAREER";
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        color: rgba(156, 163, 175, 0.85);
+        margin-left: auto;
+      }
+
+      #career-list {
+        list-style: none;
+        margin-top: 10px;
+        padding-left: 0;
+        position: relative;
+      }
+
+      #career-list::before {
+        content: "";
+        position: absolute;
+        left: 8px;
+        top: 4px;
+        bottom: 4px;
+        width: 2px;
+        background: linear-gradient(
+          to bottom,
+          rgba(148, 163, 253, 0.7),
+          rgba(59, 130, 246, 0.2),
+          rgba(16, 185, 129, 0.6)
+        );
+        opacity: 0.8;
+      }
+
+      #career-list li {
+        position: relative;
+        margin-left: 26px;
+        margin-bottom: 14px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        background: rgba(15, 23, 42, 0.92);
+        border: 1px solid rgba(55, 65, 81, 0.9);
+        font-size: 0.92rem;
+        color: #e5e7eb;
+        line-height: 1.6;
+        transition: transform 0.18s ease-out, box-shadow 0.18s ease-out, border-color 0.18s ease-out,
+          background 0.18s ease-out;
+      }
+
+      #career-list li::before {
+        content: "";
+        position: absolute;
+        left: -19px;
+        top: 12px;
+        width: 11px;
+        height: 11px;
+        border-radius: 999px;
+        background: radial-gradient(circle, #fef3c7 0, #f97316 40%, #7c2d12 95%);
+        box-shadow:
+          0 0 0 4px rgba(248, 250, 252, 0.06),
+          0 0 16px rgba(251, 191, 36, 0.9);
+      }
+
+      #career-list li:last-child {
+        margin-bottom: 2px;
+      }
+
+      #career-list li:hover {
+        transform: translateY(-2px);
+        background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.26), transparent 60%),
+          rgba(15, 23, 42, 0.98);
+        border-color: rgba(129, 140, 248, 0.95);
+        box-shadow:
+          0 14px 30px rgba(15, 23, 42, 0.85),
+          0 0 0 1px rgba(129, 140, 248, 0.6);
+      }
+
+      .career-meta {
+        display: flex;
+        gap: 8px;
+        margin-top: 6px;
+        font-size: 0.75rem;
+        color: rgba(148, 163, 253, 0.9);
+      }
+
+      .career-meta span {
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: rgba(17, 24, 39, 0.9);
+        border: 1px solid rgba(55, 65, 81, 0.9);
+      }
+
+      /* 반응형 */
+      @media (max-width: 768px) {
+        body {
+          padding: 16px;
+        }
+
+        .profile-container {
+          grid-template-columns: minmax(0, 1fr);
+          padding: 20px 18px 18px;
+          border-radius: 24px;
+          gap: 20px;
+        }
+
+        .profile-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .profile-tagline {
+          align-self: flex-end;
+        }
+
+        .profile-intro,
+        .profile-career {
+          padding: 16px 14px;
+        }
+      }
+
+      @keyframes floatUp {
+        from {
+          opacity: 0;
+          transform: translateY(12px) scale(0.99);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      @keyframes floatA {
+        from {
+          transform: translate3d(0, 0, 0) rotate(0deg);
+        }
+        to {
+          transform: translate3d(-40px, 30px, 0) rotate(12deg);
+        }
+      }
+
+      @keyframes floatB {
+        from {
+          transform: translate3d(0, 0, 0) rotate(0deg);
+        }
+        to {
+          transform: translate3d(40px, -20px, 0) rotate(-10deg);
+        }
+      }
+
+      @keyframes shine {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+    </style>
   </head>
   <body>
     <div id="app">
       <div class="profile-container">
         <header class="profile-header">
           <h1>김영후의 음악교실</h1>
+          <div class="profile-tagline">MUSIC · EDUCATION · AI</div>
         </header>
+
         <section class="profile-intro">
           <p id="intro-text">여기에 간단한 자기 소개를 입력하세요.</p>
+          <div class="intro-chips">
+            <div class="chip">
+              <span>🎼</span><span>중등 음악교육</span>
+            </div>
+            <div class="chip">
+              <span>🧠</span><span>AI·디지털 음악수업</span>
+            </div>
+            <div class="chip">
+              <span>🎤</span><span>합창·뮤지컬 지도</span>
+            </div>
+          </div>
         </section>
+
         <section class="profile-career">
           <h2>경력</h2>
           <ul id="career-list">
-            <li>경력을 추가하세요.</li>
+            <li>
+              경력을 추가하세요.
+              <!-- 예시 메타 (나중에 JS로 동적 생성해도 됨)
+              <div class="career-meta">
+                <span>중학교 음악교사</span>
+                <span>10년 차</span>
+              </div>
+              -->
+            </li>
           </ul>
         </section>
       </div>
