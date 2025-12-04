@@ -1,335 +1,234 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>김영후의 음악교실</title>
-
-    <style>
-      :root {
-        --bg: #050816;
-        --accent: #ff6bcb;
-        --accent2: #7b5cff;
-        --accent3: #00ffd1;
-        --card: #0b1220;
-        --text-main: #f9fafb;
-        --text-sub: #9ca3af;
-      }
-
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      body {
-        font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Noto Sans KR",
-          system-ui, sans-serif;
-        background: radial-gradient(circle at top, #1f2937 0, var(--bg) 55%);
-        color: var(--text-main);
-        min-height: 100vh;
-      }
-
-      /* 앱 전체 프레임(상단 상태바 여백 포함) */
-      #app {
-        max-width: 480px;         /* 핸드폰 폭 느낌 */
-        margin: 0 auto;
-        min-height: 100vh;
-        background: linear-gradient(180deg, #020617 0%, #020617 40%, #020617 100%);
-        padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
-        display: flex;
-        flex-direction: column;
-      }
-
-      /* 상단 앱바 */
-      .app-bar {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
-        background: linear-gradient(
-          90deg,
-          rgba(15, 23, 42, 0.95),
-          rgba(15, 23, 42, 0.8)
-        );
-        border-bottom: 1px solid rgba(148, 163, 253, 0.25);
-        padding: 10px 18px 8px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .app-bar-logo {
-        width: 30px;
-        height: 30px;
-        border-radius: 12px;
-        background: radial-gradient(circle, var(--accent) 0, #1e293b 65%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 18px;
-        box-shadow: 0 0 18px rgba(248, 113, 113, 0.7);
-      }
-
-      .app-bar-title {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-      }
-
-      .app-bar-title h1 {
-        font-size: 16px;
-        font-weight: 700;
-      }
-
-      .app-bar-title span {
-        font-size: 11px;
-        color: var(--text-sub);
-      }
-
-      /* 메인 스크롤 영역 */
-      .screen {
-        flex: 1;
-        overflow-y: auto;
-        padding: 16px 16px 24px;
-        background:
-          radial-gradient(circle at top left, rgba(123, 92, 255, 0.25), transparent 60%),
-          radial-gradient(circle at bottom right, rgba(0, 255, 209, 0.25), transparent 60%),
-          #020617;
-      }
-
-      .profile-card {
-        border-radius: 20px;
-        padding: 18px 18px 16px;
-        background: linear-gradient(
-          145deg,
-          rgba(15, 23, 42, 0.95),
-          rgba(15, 23, 42, 0.9)
-        );
-        border: 1px solid rgba(148, 163, 253, 0.45);
-        box-shadow:
-          0 18px 40px rgba(15, 23, 42, 0.9),
-          0 0 0 1px rgba(30, 64, 175, 0.3);
-        margin-bottom: 14px;
-      }
-
-      .profile-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 10px;
-        gap: 10px;
-      }
-
-      .profile-name {
-        font-size: 18px;
-        font-weight: 800;
-      }
-
-      .profile-tag {
-        font-size: 11px;
-        padding: 4px 10px;
-        border-radius: 999px;
-        border: 1px solid rgba(129, 140, 248, 0.7);
-        background: rgba(15, 23, 42, 0.9);
-        color: #c7d2fe;
-      }
-
-      .profile-intro-text {
-        font-size: 14px;
-        line-height: 1.7;
-        color: #e5e7eb;
-        margin-bottom: 10px;
-      }
-
-      .intro-chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-        margin-top: 4px;
-      }
-
-      .chip {
-        font-size: 11px;
-        padding: 4px 9px;
-        border-radius: 999px;
-        background: rgba(15, 23, 42, 0.95);
-        border: 1px solid rgba(55, 65, 81, 0.9);
-        color: #e5e7eb;
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-      }
-
-      /* 섹션 공통 */
-      .section-title {
-        font-size: 14px;
-        font-weight: 700;
-        margin-bottom: 6px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .section-title::before {
-        content: "";
-        width: 4px;
-        height: 16px;
-        border-radius: 999px;
-        background: linear-gradient(180deg, var(--accent2), var(--accent3));
-      }
-
-      /* 경력 섹션 */
-      .career-card {
-        border-radius: 18px;
-        padding: 14px 14px 10px;
-        background: rgba(15, 23, 42, 0.96);
-        border: 1px solid rgba(55, 65, 81, 0.9);
-      }
-
-      #career-list {
-        list-style: none;
-        margin-top: 4px;
-        padding-left: 0;
-      }
-
-      #career-list li {
-        position: relative;
-        padding: 10px 10px 8px;
-        border-radius: 12px;
-        background: #020617;
-        border: 1px solid rgba(31, 41, 55, 0.9);
-        font-size: 13px;
-        color: #e5e7eb;
-        margin-bottom: 8px;
-      }
-
-      #career-list li:last-child {
-        margin-bottom: 0;
-      }
-
-      .career-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 4px;
-        margin-top: 4px;
-        font-size: 11px;
-        color: var(--text-sub);
-      }
-
-      .career-meta span {
-        padding: 2px 6px;
-        border-radius: 999px;
-        background: #020617;
-        border: 1px solid rgba(55, 65, 81, 0.9);
-      }
-
-      /* 하단 네비(탭바 느낌) */
-      .bottom-nav {
-        position: sticky;
-        bottom: 0;
-        z-index: 10;
-        background: rgba(15, 23, 42, 0.97);
-        border-top: 1px solid rgba(31, 41, 55, 0.9);
-        padding: 6px 10px calc(6px + env(safe-area-inset-bottom));
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-      }
-
-      .nav-item {
-        flex: 1;
-        text-align: center;
-        font-size: 11px;
-        color: var(--text-sub);
-        padding: 6px 0;
-      }
-
-      .nav-item.active {
-        color: #e5e7eb;
-      }
-
-      .nav-dot {
-        width: 6px;
-        height: 6px;
-        border-radius: 999px;
-        margin: 0 auto 2px;
-        background: transparent;
-      }
-
-      .nav-item.active .nav-dot {
-        background: linear-gradient(135deg, var(--accent), var(--accent3));
-        box-shadow: 0 0 10px rgba(96, 165, 250, 0.9);
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app">
-      <!-- 상단 앱바 -->
-      <header class="app-bar">
-        <div class="app-bar-logo">🎧</div>
-        <div class="app-bar-title">
-          <h1>김영후의 음악교실</h1>
-          <span>Music · Education · AI</span>
-        </div>
-      </header>
-
-      <!-- 메인 화면 -->
-      <main class="screen">
-        <!-- 프로필 카드 -->
-        <section class="profile-card">
-          <div class="profile-header">
-            <div class="profile-name">김영후</div>
-            <span class="profile-tag">중등 음악교사 · AI 수업</span>
-          </div>
-          <p id="intro-text" class="profile-intro-text">
-            여기에 간단한 자기 소개를 입력하세요.
-          </p>
-          <div class="intro-chips">
-            <div class="chip">🎼 중학교 음악수업</div>
-            <div class="chip">🧠 AI·디지털 기반 수업</div>
-            <div class="chip">🎤 합창·뮤지컬 지도</div>
-          </div>
-        </section>
-
-        <!-- 경력 카드 -->
-        <section class="career-card">
-          <h2 class="section-title">경력</h2>
-          <ul id="career-list">
-            <li>
-              경력을 추가하세요.
-              <!--
-              예시)
-              <div class="career-meta">
-                <span>서울 ○○중학교</span>
-                <span>음악교사</span>
-                <span>2015–2025</span>
-              </div>
-              -->
-            </li>
-          </ul>
-        </section>
-      </main>
-
-      <!-- 하단 네비게이션 바 (앱 느낌용)-->
-      <nav class="bottom-nav">
-        <div class="nav-item active">
-          <div class="nav-dot"></div>
-          홈
-        </div>
-        <div class="nav-item">
-          <div class="nav-dot"></div>
-          수업
-        </div>
-        <div class="nav-item">
-          <div class="nav-dot"></div>
-          연구
-        </div>
-      </nav>
+<head>
+  <meta charset="UTF-8" />
+  <title>음악 퀴즈 게임</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background-color: #f4f4f5;
+      color: #111827;
+    }
+    .app {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+    h1 {
+      font-size: 22px;
+      margin: 8px 0 4px;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+    .card {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    }
+    .question-text {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 14px;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    label:hover {
+      background-color: #f3f4f6;
+    }
+    input[type="radio"] {
+      transform: scale(1.1);
+    }
+    .btn {
+      margin-top: 10px;
+      width: 100%;
+      border-radius: 999px;
+      padding: 10px 16px;
+      border: none;
+      background-color: #2563eb;
+      color: #f9fafb;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .btn:hover { opacity: 0.95; }
+    .result {
+      margin-top: 12px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .explain {
+      margin-top: 4px;
+      font-size: 13px;
+      color: #4b5563;
+    }
+    .correct {
+      background-color: #dcfce7;
+    }
+    .incorrect {
+      background-color: #fee2e2;
+    }
+    .small {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <h1>음악 퀴즈 게임</h1>
+    <div class="subtitle">
+      보기에서 정답을 고르고 <b>채점하기</b>를 눌러보세요.
     </div>
 
-    <script type="module" src="/src/main.js"></script>
-  </body>
+    <div id="quiz-container"></div>
+
+    <button class="btn" id="submit-btn">채점하기</button>
+
+    <div class="result" id="result"></div>
+    <div class="explain" id="feedback"></div>
+
+    <div class="small">
+      👉 문제를 바꾸고 싶으면 이 파일 안의
+      <code>quizData</code> 부분만 수정하면 됩니다.
+    </div>
+  </div>
+
+  <script>
+    // 🔽🔽 여기만 수정하면 문제가 바뀝니다 🔽🔽
+    const quizData = [
+      {
+        question: "다음 중 '느린 빠르기'에 가장 가까운 말은 무엇인가요?",
+        choices: ["Allegro", "Presto", "Andante", "Vivace"],
+        answer: 2, // 0부터 시작: 0,1,2,3 중 정답 인덱스
+        comment: "Andante는 '걸음걸이처럼 천천히'라는 뜻으로 비교적 느린 빠르기입니다."
+      },
+      {
+        question: "다음 중 타악기가 아닌 것은 무엇인가요?",
+        choices: ["팀파니", "트라이앵글", "플루트", "큰북"],
+        answer: 2,
+        comment: "플루트는 관악기입니다. 나머지는 모두 타악기 계열이에요."
+      },
+      {
+        question: "K-POP 감상 수업에서 '세대 비교'를 하는 가장 큰 이유는?",
+        choices: [
+          "좋아하는 가수를 자랑하기 위해",
+          "부모님을 설득하기 위해",
+          "시대에 따라 음악이 어떻게 달라졌는지 이해하기 위해",
+          "시험 점수를 올리기 위해"
+        ],
+        answer: 2,
+        comment: "세대 비교는 각 시대의 사회·문화적 배경에 따라 음악이 어떻게 달라졌는지 이해하기 위한 활동입니다."
+      }
+    ];
+    // 🔼🔼 여기만 수정하면 문제가 바뀝니다 🔼🔼
+
+    const quizContainer = document.getElementById("quiz-container");
+    const submitBtn = document.getElementById("submit-btn");
+    const resultEl = document.getElementById("result");
+    const feedbackEl = document.getElementById("feedback");
+
+    // 문제 렌더링
+    function renderQuiz() {
+      quizContainer.innerHTML = "";
+      quizData.forEach((q, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.index = index;
+
+        const qText = document.createElement("div");
+        qText.className = "question-text";
+        qText.textContent = `${index + 1}. ${q.question}`;
+        card.appendChild(qText);
+
+        const choicesDiv = document.createElement("div");
+        choicesDiv.className = "choices";
+
+        q.choices.forEach((choice, cIndex) => {
+          const label = document.createElement("label");
+          const input = document.createElement("input");
+          input.type = "radio";
+          input.name = `q${index}`;
+          input.value = cIndex;
+          label.appendChild(input);
+          const span = document.createElement("span");
+          span.textContent = choice;
+          label.appendChild(span);
+          choicesDiv.appendChild(label);
+        });
+
+        card.appendChild(choicesDiv);
+        quizContainer.appendChild(card);
+      });
+    }
+
+    // 채점
+    function gradeQuiz() {
+      let score = 0;
+      let total = quizData.length;
+      let wrongList = [];
+
+      // 색 초기화
+      document.querySelectorAll(".card").forEach(card => {
+        card.classList.remove("correct", "incorrect");
+      });
+
+      quizData.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="q${index}"]:checked`);
+        const card = document.querySelector(`.card[data-index="${index}"]`);
+
+        if (!selected) {
+          // 무응답은 오답 처리
+          card.classList.add("incorrect");
+          wrongList.push({ index, q });
+          return;
+        }
+
+        const answerIndex = parseInt(selected.value, 10);
+        if (answerIndex === q.answer) {
+          score++;
+          card.classList.add("correct");
+        } else {
+          card.classList.add("incorrect");
+          wrongList.push({ index, q });
+        }
+      });
+
+      resultEl.textContent = `점수: ${score} / ${total}점`;
+
+      if (wrongList.length === 0) {
+        feedbackEl.textContent = "완벽해요! 🎉 모든 문제를 맞췄습니다.";
+      } else {
+        const lines = wrongList.map(item => {
+          const qNum = item.index + 1;
+          return `${qNum}번 정답 해설: ${item.q.comment || "정답을 다시 확인해보세요."}`;
+        });
+        feedbackEl.textContent = lines.join(" / ");
+      }
+    }
+
+    renderQuiz();
+    submitBtn.addEventListener("click", gradeQuiz);
+  </script>
+</body>
 </html>
