@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>중학생 가창평가 동료평가</title>
+  <title>가창평가 동료평가 앱</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     * {
@@ -12,303 +12,329 @@
     body {
       margin: 0;
       padding: 0;
-      /* 파스텔 그라데이션 배경 */
       background: linear-gradient(135deg, #fdf1ff, #f2f7ff, #fef6e8);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: #333;
     }
-    .container {
-      max-width: 1040px;
-      margin: 0 auto;
-      padding: 28px 16px 40px;
+
+    /* 앱 프레임 */
+    .app-shell {
+      width: 100%;
+      max-width: 480px;
+      height: 90vh;
+      max-height: 860px;
+      background: rgba(255,255,255,0.96);
+      border-radius: 30px;
+      box-shadow: 0 18px 40px rgba(120, 120, 180, 0.28);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
     }
-    h1, h2 {
-      text-align: center;
+
+    /* 상단바 */
+    .status-bar {
+      height: 20px;
+      padding: 6px 18px 0;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      color: #8a8bad;
+    }
+
+    .header {
+      padding: 10px 20px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .app-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #ffdfef, #ffe8c7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .title-box {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .title-box h1 {
       margin: 0;
+      font-size: 1.1rem;
+      color: #454577;
     }
-    h1 {
-      font-size: 1.8rem;
-      margin-bottom: 6px;
-      color: #4a4a7f;
-      letter-spacing: 0.03em;
-    }
-    h2 {
-      font-size: 1rem;
-      margin-bottom: 18px;
-      color: #77779a;
+    .title-box span {
+      font-size: 0.78rem;
+      color: #8b8cb0;
     }
 
-    .tagline {
-      text-align: center;
-      font-size: 0.86rem;
-      color: #8f8fad;
-      margin-bottom: 18px;
+    .header-right {
+      font-size: 0.8rem;
+      color: #8f8fb1;
     }
 
+    /* 콘텐츠 영역 스크롤 */
+    .content {
+      flex: 1;
+      padding: 8px 18px 12px;
+      overflow-y: auto;
+      background: radial-gradient(circle at top left, #fdf5ff, #ffffff 55%);
+    }
+
+    /* 카드 */
     .card {
-      background: rgba(255, 255, 255, 0.94);
-      padding: 18px 22px;
+      background: #ffffff;
       border-radius: 18px;
-      box-shadow: 0 8px 22px rgba(141, 147, 201, 0.18);
-      margin-bottom: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(6px);
+      padding: 14px 14px 12px;
+      margin-bottom: 12px;
+      box-shadow: 0 6px 18px rgba(180, 182, 230, 0.18);
+      border: 1px solid #f3f2ff;
     }
 
-    .small {
-      font-size: 0.92rem;
-      color: #55566f;
-      line-height: 1.6;
-    }
-
-    .label-row {
+    .chip-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 10px;
+      gap: 6px;
+      margin-bottom: 8px;
     }
-    .label-row > div {
-      flex: 1 1 160px;
+    .chip {
+      font-size: 0.68rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f4f4ff;
+      color: #5f6298;
+      border: 1px solid #e0e2ff;
+    }
+
+    .card-title {
       font-size: 0.9rem;
-      color: #4f506b;
+      font-weight: 700;
+      color: #4d4e7f;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .label-row strong {
-      display: inline-block;
-      min-width: 60px;
+    .card-title span.icon {
+      font-size: 1rem;
+    }
+
+    .text {
+      font-size: 0.82rem;
+      color: #595b7c;
+      line-height: 1.55;
     }
 
     .info-box {
-      font-size: 0.88rem;
-      background: linear-gradient(135deg, #eef3ff, #f9f2ff);
-      border-radius: 14px;
-      padding: 10px 12px;
-      margin-top: 10px;
-      color: #4b4c71;
-      border: 1px solid #dde3ff;
-    }
-    .info-box b {
-      color: #454776;
-    }
-
-    .rubric-title {
-      font-weight: 700;
-      font-size: 0.96rem;
-      margin-bottom: 8px;
-      color: #484a7d;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
       margin-top: 6px;
-      font-size: 0.83rem;
-      table-layout: fixed;
-    }
-    th, td {
-      border: 1px solid #e4e6fa;
-      padding: 7px 6px;
-      text-align: center;
-      word-break: keep-all;
-    }
-    th {
-      background: linear-gradient(135deg, #f4f6ff, #fdf5ff);
-      font-weight: 600;
-      color: #50527b;
-    }
-    td:first-child {
-      background: #faf7ff;
-      font-weight: 600;
-      color: #555188;
-    }
-
-    .example-box {
-      font-size: 0.84rem;
-      margin-top: 10px;
       padding: 8px 10px;
-      border-radius: 12px;
-      background: #fffaf3;
-      border: 1px dashed #f1d7a2;
-      color: #6a5b3c;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #eef3ff, #f8f2ff);
+      border: 1px solid #dde4ff;
+      font-size: 0.78rem;
+      color: #505281;
     }
 
-    .iframe-wrapper h2 {
-      font-size: 1rem;
-      color: #595a86;
-      margin-bottom: 10px;
+    /* 작은 루브릭 요약 */
+    .rubric-list {
+      list-style: none;
+      padding-left: 0;
+      margin: 6px 0 2px;
+      font-size: 0.78rem;
+      color: #575881;
     }
-
-    .iframe-wrapper iframe {
-      width: 100%;
-      min-height: 930px;
-      border: none;
-      background: #ffffff;
-      border-radius: 18px;
-      box-shadow: 0 10px 28px rgba(136, 145, 197, 0.25);
+    .rubric-list li {
+      margin-bottom: 4px;
     }
-
-    .helper {
-      font-size: 0.8rem;
-      color: #8a8bb0;
-      margin-top: 6px;
-      text-align: right;
+    .rubric-tag {
+      display: inline-block;
+      min-width: 86px;
+      font-weight: 600;
+      color: #4b4d7b;
     }
 
     .pill-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 8px;
+      gap: 6px;
+      margin-top: 4px;
     }
     .pill {
-      font-size: 0.8rem;
-      padding: 5px 10px;
+      font-size: 0.75rem;
+      padding: 4px 8px;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(179, 188, 255, 0.7);
-      color: #5e6399;
+      background: #fffaf3;
+      border: 1px dashed #f1d7a2;
+      color: #6b5b3d;
     }
 
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 1.5rem;
-      }
-      h2 {
-        font-size: 0.9rem;
-      }
-      table {
-        font-size: 0.78rem;
-      }
-      .card {
-        padding: 14px 14px;
+    .example {
+      font-size: 0.76rem;
+      color: #6a6b8c;
+      margin-top: 6px;
+      padding-left: 6px;
+      border-left: 2px solid #e0e2ff;
+    }
+
+    /* 하단 버튼 바 */
+    .bottom-bar {
+      padding: 10px 16px 16px;
+      border-top: 1px solid #ecebff;
+      background: linear-gradient(180deg, #f8f7ff, #ffffff);
+    }
+    .btn-main {
+      width: 100%;
+      padding: 12px;
+      border-radius: 999px;
+      border: none;
+      outline: none;
+      background: linear-gradient(135deg, #8c93ff, #f39ddc);
+      color: #ffffff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      box-shadow: 0 10px 22px rgba(128, 132, 220, 0.35);
+    }
+    .btn-main span.icon {
+      font-size: 1.1rem;
+    }
+    .btn-sub {
+      margin-top: 6px;
+      text-align: center;
+      font-size: 0.72rem;
+      color: #8687aa;
+    }
+
+    @media (max-width: 520px) {
+      .app-shell {
+        border-radius: 0;
+        height: 100vh;
+        max-height: none;
+        box-shadow: none;
       }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>중학생 가창평가 동료평가</h1>
-    <h2>자기 제외 29명 평가 · 5개 영역(1~5점) · 한줄평</h2>
-    <p class="tagline">공정하게, 서로를 존중하며 친구의 노래를 들어보고 평가해 봅시다 🎵</p>
+
+<div class="app-shell">
+
+  <!-- 상단 상태바(연출용) -->
+  <div class="status-bar">
+    <div>가창평가</div>
+    <div>● LIVE</div>
+  </div>
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-left">
+      <div class="app-icon">🎤</div>
+      <div class="title-box">
+        <h1>동료 가창평가</h1>
+        <span>자기 제외 29명 · 5개 영역 · 한줄평</span>
+      </div>
+    </div>
+    <div class="header-right">3학년 · 30명</div>
+  </div>
+
+  <!-- 내용 -->
+  <div class="content">
 
     <!-- 안내 카드 -->
     <div class="card">
-      <div class="small">
-        <strong>학생 안내</strong><br />
-        이 페이지는 <b>가창평가 동료평가</b>를 위한 안내 화면입니다.<br />
-        실제 점수 입력과 제출은 <b>아래에 있는 구글폼</b>에서 진행합니다.<br />
-        <b>자기 자신은 평가하지 않으니, 자기 번호는 비워 두거나 선택하지 마세요.</b>
+      <div class="chip-row">
+        <div class="chip">Step 1 · 설명 읽기</div>
+        <div class="chip">Step 2 · 루브릭 확인</div>
+        <div class="chip">Step 3 · 구글폼 작성</div>
       </div>
 
-      <div class="label-row">
-        <div><strong>학번</strong> : ________</div>
-        <div><strong>이름</strong> : ____________________</div>
+      <div class="card-title">
+        <span class="icon">📌</span>
+        <span>평가 전 안내</span>
       </div>
-
+      <div class="text">
+        이 화면은 <b>가창평가 동료평가 앱</b>입니다.<br>
+        아래 안내와 루브릭을 먼저 읽고, 마지막에 나오는
+        <b>“구글폼 열기” 버튼</b>을 눌러 실제 평가를 작성합니다.
+      </div>
       <div class="info-box">
-        <b>[평가 방법]</b><br />
-        · 반 전체 29명을 평가합니다. (자기 자신 제외)<br />
-        · 각 영역은 1점(미흡) ~ 5점(우수) 중 하나를 선택합니다.<br />
-        · 한 줄평은 상대를 존중하는 표현으로, 구체적으로 적어 주세요.<br />
-        · 장난스럽게 적지 말고, 친구의 성장을 도와주는 피드백을 생각해 봅시다.
+        · <b>자기 자신은 평가하지 않습니다.</b> 자기 번호는 건너뛰세요.<br>
+        · 친구 29명을 <b>음정·리듬·발성·전달력·표현력</b> 5개 영역으로 평가합니다.<br>
+        · 마지막에 친구에게 <b>예의 있는 한줄평</b>을 남겨 주세요.<br>
+        · 장난이 아닌, 서로의 성장을 돕는 진지한 피드백만 적습니다.
       </div>
+    </div>
+
+    <!-- 루브릭 카드 (요약형) -->
+    <div class="card">
+      <div class="card-title">
+        <span class="icon">🎼</span>
+        <span>가창평가 루브릭 요약</span>
+      </div>
+      <ul class="rubric-list">
+        <li>
+          <span class="rubric-tag">음정 정확도</span>
+          1점: 자주 틀려서 멜로디가 잘 안 들림<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;5점: 거의 틀리지 않고 매우 정확하게 부름
+        </li>
+        <li>
+          <span class="rubric-tag">리듬 안정성</span>
+          1점: 박자를 맞추기 매우 힘듦<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;5점: 박자감이 뛰어나고 매우 안정적임
+        </li>
+        <li>
+          <span class="rubric-tag">발성·호흡</span>
+          1점: 소리가 약해 잘 안 들림, 호흡 불안정<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;5점: 호흡·발성이 매우 좋고 탄탄하게 들림
+        </li>
+        <li>
+          <span class="rubric-tag">가사 전달력</span>
+          1점: 가사가 거의 알아듣기 어려움<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;5점: 발음이 매우 정확하고 가사가 잘 전달됨
+        </li>
+        <li>
+          <span class="rubric-tag">음악적 표현력</span>
+          1점: 표정·감정 표현이 거의 없음<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;5점: 표정·몸짓·소리 모두 표현이 매우 풍부함
+        </li>
+      </ul>
 
       <div class="pill-row">
-        <div class="pill">1점: 아직 많이 연습이 필요한 단계</div>
-        <div class="pill">3점: 평균적인 수준</div>
-        <div class="pill">5점: 매우 잘된 모범적인 수준</div>
+        <div class="pill">1점 · 아직 많이 연습이 필요한 단계</div>
+        <div class="pill">3점 · 평균적인 보통 수준</div>
+        <div class="pill">5점 · 매우 잘된 모범적인 수준</div>
+      </div>
+
+      <div class="example">
+        <b>한줄평 예시</b><br>
+        · "처음보다 음정이 많이 안정돼서 듣기 편했어요."<br>
+        · "리듬은 좋았는데, 가사를 좀 더 또렷하게 하면 더 좋을 것 같아요."<br>
+        · "표정이 밝아서 노래 분위기가 잘 전해졌어요. 계속 이렇게 불러요!"
       </div>
     </div>
 
-    <!-- 루브릭 카드 -->
+    <!-- 체크 카드 -->
     <div class="card">
-      <div class="rubric-title">[가창평가 루브릭 5개 영역 (1~5점)]</div>
-      <table>
-        <thead>
-          <tr>
-            <th>영역</th>
-            <th>1점</th>
-            <th>2점</th>
-            <th>3점</th>
-            <th>4점</th>
-            <th>5점</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1. 음정 정확도</td>
-            <td>음정이 자주 틀려서<br>멜로디가 잘 안 들림</td>
-            <td>음정이 자주 흔들림</td>
-            <td>가끔 틀리지만<br>전체적으로는 맞는 편</td>
-            <td>대부분 정확하게<br>멜로디를 잘 유지함</td>
-            <td>거의 틀리지 않고<br>매우 정확하게 부름</td>
-          </tr>
-          <tr>
-            <td>2. 리듬 안정성</td>
-            <td>박자를 맞추기<br>매우 힘들어 보임</td>
-            <td>리듬이 자주<br>앞서거나 늦음</td>
-            <td>가끔 흔들리지만<br>전체 리듬은 유지됨</td>
-            <td>대체로 자연스럽게<br>리듬을 유지함</td>
-            <td>박자감이 뛰어나고<br>매우 안정적임</td>
-          </tr>
-          <tr>
-            <td>3. 발성·호흡</td>
-            <td>소리가 약하거나<br>거의 들리지 않음</td>
-            <td>호흡이 자주 끊기고<br>소리가 불안정함</td>
-            <td>보통 정도로<br>가사는 들리는 편</td>
-            <td>호흡과 발성이<br>대체로 안정적임</td>
-            <td>호흡·발성이 매우 좋고<br>탄탄하게 들림</td>
-          </tr>
-          <tr>
-            <td>4. 가사 전달력</td>
-            <td>무슨 말을 하는지<br>거의 알아듣기 어려움</td>
-            <td>가사가 많이 뭉개짐</td>
-            <td>가사는 들리지만<br>약간 불분명함</td>
-            <td>대부분 또렷하게<br>가사가 들림</td>
-            <td>발음이 매우 정확하고<br>가사가 잘 전달됨</td>
-          </tr>
-          <tr>
-            <td>5. 음악적 표현력</td>
-            <td>표정·감정 표현이<br>거의 없음</td>
-            <td>약간의 표현은 있으나<br>많이 어색함</td>
-            <td>기본적인 감정 표현은<br>있는 편</td>
-            <td>가사와 분위기에 맞게<br>감정이 잘 드러남</td>
-            <td>표정·몸짓·소리 모두<br>표현이 매우 풍부함</td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="ca
 
-      <div class="example-box">
-        <b>[한 줄평 예시]</b><br />
-        · "처음보다 음정이 많이 안정돼서 듣기 편했어요."<br />
-        · "리듬은 좋았는데, 가사를 좀 더 또렷하게 말해 주면 더 좋을 것 같아요."<br />
-        · "표정이 밝아서 노래 분위기가 잘 전해졌어요. 자신감 있게 계속 불러요!"
-      </div>
-    </div>
-
-    <!-- 구글폼 임베드 영역 -->
-    <div class="card iframe-wrapper">
-      <h2>▼ 여기에서 실제 평가를 작성하세요 (구글폼 연동)</h2>
-
-      <!--
-        ✋ 중요 안내
-        1. 구글폼에서 설문을 만든 뒤
-        2. 상단 [보내기] → < > (임베드 아이콘) 클릭
-        3. 나오는 <iframe ...></iframe> 코드를 복사
-        4. 아래 iframe 부분 전체를, 복사한 코드로 교체하면 됩니다.
-      -->
-
-      <!-- ▼▼▼ 여기를 구글폼에서 가져온 iframe 코드로 교체하세요 ▼▼▼ -->
-      <iframe src="https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/viewform?embedded=true">
-        로드 중입니다…
-      </iframe>
-      <!-- ▲▲▲ 여기를 구글폼에서 가져온 iframe 코드로 교체하세요 ▲▲▲ -->
-
-      <div class="helper">
-        * 설문이 보이지 않으면 새로고침(F5)하거나 다른 브라우저에서 열어 보세요.
-      </div>
-    </div>
-  </div>
-</body>
-</html>
 
 
 
