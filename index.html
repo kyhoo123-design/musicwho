@@ -114,5 +114,201 @@
       font-weight: 600;
       color: #50527b;
     }
+    td:first-child {
+      background: #faf7ff;
+      font-weight: 600;
+      color: #555188;
+    }
+
+    .example-box {
+      font-size: 0.84rem;
+      margin-top: 10px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: #fffaf3;
+      border: 1px dashed #f1d7a2;
+      color: #6a5b3c;
+    }
+
+    .iframe-wrapper h2 {
+      font-size: 1rem;
+      color: #595a86;
+      margin-bottom: 10px;
+    }
+
+    .iframe-wrapper iframe {
+      width: 100%;
+      min-height: 930px;
+      border: none;
+      background: #ffffff;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(136, 145, 197, 0.25);
+    }
+
+    .helper {
+      font-size: 0.8rem;
+      color: #8a8bb0;
+      margin-top: 6px;
+      text-align: right;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .pill {
+      font-size: 0.8rem;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(179, 188, 255, 0.7);
+      color: #5e6399;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 1.5rem;
+      }
+      h2 {
+        font-size: 0.9rem;
+      }
+      table {
+        font-size: 0.78rem;
+      }
+      .card {
+        padding: 14px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>중학생 가창평가 동료평가</h1>
+    <h2>자기 제외 29명 평가 · 5개 영역(1~5점) · 한줄평</h2>
+    <p class="tagline">공정하게, 서로를 존중하며 친구의 노래를 들어보고 평가해 봅시다 🎵</p>
+
+    <!-- 안내 카드 -->
+    <div class="card">
+      <div class="small">
+        <strong>학생 안내</strong><br />
+        이 페이지는 <b>가창평가 동료평가</b>를 위한 안내 화면입니다.<br />
+        실제 점수 입력과 제출은 <b>아래에 있는 구글폼</b>에서 진행합니다.<br />
+        <b>자기 자신은 평가하지 않으니, 자기 번호는 비워 두거나 선택하지 마세요.</b>
+      </div>
+
+      <div class="label-row">
+        <div><strong>학번</strong> : ________</div>
+        <div><strong>이름</strong> : ____________________</div>
+      </div>
+
+      <div class="info-box">
+        <b>[평가 방법]</b><br />
+        · 반 전체 29명을 평가합니다. (자기 자신 제외)<br />
+        · 각 영역은 1점(미흡) ~ 5점(우수) 중 하나를 선택합니다.<br />
+        · 한 줄평은 상대를 존중하는 표현으로, 구체적으로 적어 주세요.<br />
+        · 장난스럽게 적지 말고, 친구의 성장을 도와주는 피드백을 생각해 봅시다.
+      </div>
+
+      <div class="pill-row">
+        <div class="pill">1점: 아직 많이 연습이 필요한 단계</div>
+        <div class="pill">3점: 평균적인 수준</div>
+        <div class="pill">5점: 매우 잘된 모범적인 수준</div>
+      </div>
+    </div>
+
+    <!-- 루브릭 카드 -->
+    <div class="card">
+      <div class="rubric-title">[가창평가 루브릭 5개 영역 (1~5점)]</div>
+      <table>
+        <thead>
+          <tr>
+            <th>영역</th>
+            <th>1점</th>
+            <th>2점</th>
+            <th>3점</th>
+            <th>4점</th>
+            <th>5점</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. 음정 정확도</td>
+            <td>음정이 자주 틀려서<br>멜로디가 잘 안 들림</td>
+            <td>음정이 자주 흔들림</td>
+            <td>가끔 틀리지만<br>전체적으로는 맞는 편</td>
+            <td>대부분 정확하게<br>멜로디를 잘 유지함</td>
+            <td>거의 틀리지 않고<br>매우 정확하게 부름</td>
+          </tr>
+          <tr>
+            <td>2. 리듬 안정성</td>
+            <td>박자를 맞추기<br>매우 힘들어 보임</td>
+            <td>리듬이 자주<br>앞서거나 늦음</td>
+            <td>가끔 흔들리지만<br>전체 리듬은 유지됨</td>
+            <td>대체로 자연스럽게<br>리듬을 유지함</td>
+            <td>박자감이 뛰어나고<br>매우 안정적임</td>
+          </tr>
+          <tr>
+            <td>3. 발성·호흡</td>
+            <td>소리가 약하거나<br>거의 들리지 않음</td>
+            <td>호흡이 자주 끊기고<br>소리가 불안정함</td>
+            <td>보통 정도로<br>가사는 들리는 편</td>
+            <td>호흡과 발성이<br>대체로 안정적임</td>
+            <td>호흡·발성이 매우 좋고<br>탄탄하게 들림</td>
+          </tr>
+          <tr>
+            <td>4. 가사 전달력</td>
+            <td>무슨 말을 하는지<br>거의 알아듣기 어려움</td>
+            <td>가사가 많이 뭉개짐</td>
+            <td>가사는 들리지만<br>약간 불분명함</td>
+            <td>대부분 또렷하게<br>가사가 들림</td>
+            <td>발음이 매우 정확하고<br>가사가 잘 전달됨</td>
+          </tr>
+          <tr>
+            <td>5. 음악적 표현력</td>
+            <td>표정·감정 표현이<br>거의 없음</td>
+            <td>약간의 표현은 있으나<br>많이 어색함</td>
+            <td>기본적인 감정 표현은<br>있는 편</td>
+            <td>가사와 분위기에 맞게<br>감정이 잘 드러남</td>
+            <td>표정·몸짓·소리 모두<br>표현이 매우 풍부함</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="example-box">
+        <b>[한 줄평 예시]</b><br />
+        · "처음보다 음정이 많이 안정돼서 듣기 편했어요."<br />
+        · "리듬은 좋았는데, 가사를 좀 더 또렷하게 말해 주면 더 좋을 것 같아요."<br />
+        · "표정이 밝아서 노래 분위기가 잘 전해졌어요. 자신감 있게 계속 불러요!"
+      </div>
+    </div>
+
+    <!-- 구글폼 임베드 영역 -->
+    <div class="card iframe-wrapper">
+      <h2>▼ 여기에서 실제 평가를 작성하세요 (구글폼 연동)</h2>
+
+      <!--
+        ✋ 중요 안내
+        1. 구글폼에서 설문을 만든 뒤
+        2. 상단 [보내기] → < > (임베드 아이콘) 클릭
+        3. 나오는 <iframe ...></iframe> 코드를 복사
+        4. 아래 iframe 부분 전체를, 복사한 코드로 교체하면 됩니다.
+      -->
+
+      <!-- ▼▼▼ 여기를 구글폼에서 가져온 iframe 코드로 교체하세요 ▼▼▼ -->
+      <iframe src="https://docs.google.com/forms/d/e/YOUR_GOOGLE_FORM_ID/viewform?embedded=true">
+        로드 중입니다…
+      </iframe>
+      <!-- ▲▲▲ 여기를 구글폼에서 가져온 iframe 코드로 교체하세요 ▲▲▲ -->
+
+      <div class="helper">
+        * 설문이 보이지 않으면 새로고침(F5)하거나 다른 브라우저에서 열어 보세요.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
 
 
