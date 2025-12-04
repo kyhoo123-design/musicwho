@@ -239,6 +239,90 @@
     // 오른쪽 줄 (1~5,6)
     for (let r = 1; r < 6; r++) perimeterCoords.push({ r, c: 6 });
     // 아래쪽 줄 (6,5~0)
-    for (let c = 5; c >= 0; c--) perime
+    for (let c = 5; c >= 0; c--) perimeterCoords.push({ r: 6, c });
+    // 왼쪽 줄 (5~1,0)
+    for (let r = 5; r >= 1; r--) perimeterCoords.push({ r, c: 0 });
+
+    const boardEl = document.getElementById("board");
+    const posText = document.getElementById("pos-text");
+    const visitedCountEl = document.getElementById("visited-count");
+    const logEl = document.getElementById("log");
+    const infoEl = document.getElementById("info");
+    const rollBtn = document.getElementById("roll-btn");
+
+    let position = 0;             // 0~23
+    const visited = new Array(tileData.length).fill(false);
+
+    const tileElements = [];
+
+    function drawBoard() {
+      // 타일 생성
+      tileData.forEach((tile, idx) => {
+        const coord = perimeterCoords[idx];
+        const div = document.createElement("div");
+        div.className = "tile";
+        div.style.gridRow = coord.r + 1;
+        div.style.gridColumn = coord.c + 1;
+        div.dataset.index = idx;
+
+        const label = document.createElement("div");
+        label.className = "tile-label";
+        label.textContent = tile.country;
+        div.appendChild(label);
+
+        const comp = document.createElement("div");
+        comp.className = "tile-composer";
+        comp.textContent = tile.composer;
+        div.appendChild(comp);
+
+        const index = document.createElement("div");
+        index.className = "tile-index";
+        index.textContent = idx;
+        div.appendChild(index);
+
+        boardEl.appendChild(div);
+        tileElements.push(div);
+      });
+
+      updateActiveTile();
+    }
+
+    function updateActiveTile() {
+      tileElements.forEach((el, i) => {
+        el.classList.toggle("active", i === position);
+      });
+      posText.textContent = position;
+      visited[position] = true;
+      const visitedCount = visited.filter(v => v).length;
+      visitedCountEl.textContent = visitedCount;
+      showInfo(position);
+    }
+
+    function showInfo(index) {
+      const tile = tileData[index];
+      infoEl.innerHTML = `
+        <div class="info-line"><span class="info-label">나라:</span> ${tile.country}</div>
+        <div class="info-line"><span class="info-label">대표 작곡가:</span> ${tile.composer}</div>
+        <div class="info-desc">${tile.desc}</div>
+        <div class="small">
+          ➜ 수업에서는 “이 작곡가의 대표 작품은 무엇일까?”, “이 나라의 음악적 특징은?” 같은 퀴즈를 이어서 질문해 보세요.
+        </div>
+      `;
+    }
+
+    function rollDice() {
+      const dice = Math.floor(Math.random() * 6) + 1; // 1~6
+      const oldPos = position;
+      position = (position + dice) % tileData.length;
+      updateActiveTile();
+      const tile = tileData[position];
+      logEl.textContent = `🎲 ${dice}이(가) 나와서 ${oldPos}번 칸에서 ${position}번 칸으로 이동했습니다. 도착: ${tile.country} - ${tile.composer}`;
+    }
+
+    drawBoard();
+    rollBtn.addEventListener("click", rollDice);
+  </script>
+</body>
+</html>
 
 
