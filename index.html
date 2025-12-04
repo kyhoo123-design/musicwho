@@ -2,327 +2,117 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>음악마블 | Music Marble</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>중학생 가창평가 동료평가</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background-color: #f4f4f5;
-      color: #111827;
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "맑은 고딕", sans-serif;
     }
-    .app {
-      max-width: 900px;
+    body {
+      margin: 0;
+      padding: 0;
+      /* 파스텔 그라데이션 배경 */
+      background: linear-gradient(135deg, #fdf1ff, #f2f7ff, #fef6e8);
+      color: #333;
+    }
+    .container {
+      max-width: 1040px;
       margin: 0 auto;
-      padding: 16px;
+      padding: 28px 16px 40px;
+    }
+    h1, h2 {
+      text-align: center;
+      margin: 0;
     }
     h1 {
-      font-size: 24px;
-      margin-bottom: 4px;
+      font-size: 1.8rem;
+      margin-bottom: 6px;
+      color: #4a4a7f;
+      letter-spacing: 0.03em;
     }
-    .subtitle {
-      font-size: 13px;
-      color: #6b7280;
-      margin-bottom: 16px;
-    }
-
-    .board-wrapper {
-      position: relative;
-      margin: 0 auto 16px;
-      max-width: 600px;
-      aspect-ratio: 1 / 1;
+    h2 {
+      font-size: 1rem;
+      margin-bottom: 18px;
+      color: #77779a;
     }
 
-    .board {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      grid-template-rows: repeat(7, 1fr);
-      gap: 4px;
-      width: 100%;
-      height: 100%;
-      padding: 8px;
-      background: #e5e7eb;
+    .tagline {
+      text-align: center;
+      font-size: 0.86rem;
+      color: #8f8fad;
+      margin-bottom: 18px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.94);
+      padding: 18px 22px;
       border-radius: 18px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-      position: relative;
+      box-shadow: 0 8px 22px rgba(141, 147, 201, 0.18);
+      margin-bottom: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(6px);
     }
 
-    .tile {
-      background-color: #ffffff;
-      border-radius: 10px;
-      padding: 6px 4px;
-      font-size: 11px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      text-align: center;
-      border: 1px solid #e5e7eb;
-    }
-
-    .tile-label {
-      font-weight: 700;
-      font-size: 12px;
-      margin-bottom: 2px;
-    }
-    .tile-composer {
-      font-size: 11px;
-      color: #374151;
-    }
-    .tile-index {
-      font-size: 9px;
-      color: #9ca3af;
-      align-self: flex-end;
-    }
-
-    .tile.active {
-      border-color: #2563eb;
-      box-shadow: 0 0 0 2px #2563eb55;
-      background-color: #dbeafe;
-    }
-
-    .center-title {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-    }
-    .center-title-inner {
-      text-align: center;
-    }
-    .center-main {
-      font-size: 40px;
-      font-weight: 800;
-      letter-spacing: 4px;
-    }
-    .center-sub {
-      margin-top: 4px;
-      font-size: 12px;
-      color: #6b7280;
-    }
-
-    .panel {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 12px 14px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      margin-bottom: 12px;
-    }
-    .panel-title {
-      font-size: 15px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .status-row {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-    .btn {
-      width: 100%;
-      border-radius: 999px;
-      padding: 10px 16px;
-      border: none;
-      background-color: #2563eb;
-      color: #f9fafb;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .btn:hover { opacity: 0.95; }
-    .log {
-      font-size: 13px;
-      color: #4b5563;
-      margin-top: 6px;
-    }
-
-    .info-line {
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-    .info-label {
-      font-weight: 600;
-    }
-    .info-desc {
-      font-size: 13px;
-      color: #4b5563;
-      margin-top: 4px;
-    }
     .small {
-      font-size: 11px;
-      color: #6b7280;
-      margin-top: 8px;
-    }
-  </style>
-</head>
-<body>
-  <div class="app">
-    <h1>🎵 음악마블</h1>
-    <div class="subtitle">
-      주사위를 굴려 세계 여러 나라의 대표 작곡가 칸을 돌아다니는 음악 보드게임입니다.
-    </div>
-
-    <div class="board-wrapper">
-      <div id="board" class="board"></div>
-
-      <div class="center-title">
-        <div class="center-title-inner">
-          <div class="center-main">음악마블</div>
-          <div class="center-sub">Music Marble Board Game</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title">주사위 & 상태</div>
-      <div class="status-row">
-        <div>현재 칸: <span id="pos-text">0</span> 번</div>
-        <div>방문한 나라 수: <span id="visited-count">0</span> / 24</div>
-      </div>
-      <button id="roll-btn" class="btn">🎲 주사위 굴리기</button>
-      <div id="log" class="log">게임을 시작해 보세요!</div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title">현재 위치 정보</div>
-      <div id="info">
-        <div class="info-desc">
-          주사위를 굴리면 도착한 칸의 나라와 작곡가 정보가 여기 표시됩니다.
-        </div>
-      </div>
-    </div>
-
-    <div class="small">
-      👉 선생님이 직접 나라/작곡가를 바꾸고 싶으시면,
-      이 파일 안의 <code>tileData</code> 배열만 수정하시면 됩니다.
-    </div>
-  </div>
-
-  <script>
-    // 🔽🔽 나라 + 대표 작곡가 목록 (24칸) 🔽🔽
-    const tileData = [
-      { country: "대한민국", composer: "안익태", desc: "〈애국가〉로 잘 알려진 한국 작곡가입니다." },
-      { country: "오스트리아", composer: "모차르트", desc: "천재적인 고전주의 작곡가로, 오페라와 교향곡, 협주곡을 많이 남겼습니다." },
-      { country: "독일", composer: "베토벤", desc: "고전에서 낭만으로 넘어가는 다리 역할을 한 작곡가로, 〈운명〉 교향곡이 유명합니다." },
-      { country: "러시아", composer: "차이콥스키", desc: "발레 음악 〈호두까기 인형〉, 〈백조의 호수〉 등의 작곡가입니다." },
-      { country: "프랑스", composer: "드뷔시", desc: "인상주의 음악의 대표 작곡가로, 〈달빛〉이 잘 알려져 있습니다." },
-      { country: "이탈리아", composer: "베르디", desc: "오페라 〈라 트라비아타〉, 〈아이다〉 등으로 유명한 오페라 작곡가입니다." },
-      { country: "체코", composer: "드보르자크", desc: "교향곡 〈신세계로부터〉로 널리 알려진 국민악파 작곡가입니다." },
-      { country: "노르웨이", composer: "그리그", desc: "〈페르귄트 모음곡〉 중 〈산왕의 궁전에서〉가 자주 연주됩니다." },
-      { country: "핀란드", composer: "시벨리우스", desc: "교향시 〈핀란디아〉로 잘 알려진 핀란드의 국민 작곡가입니다." },
-      { country: "폴란드", composer: "쇼팽", desc: "피아노의 시인이라 불리며, 왈츠와 야상곡 등 피아노 작품이 유명합니다." },
-      { country: "헝가리", composer: "리스트", desc: "피아노 비르투오소로, 〈헝가리 랩소디〉 시리즈가 유명합니다." },
-      { country: "영국", composer: "엘가", desc: "〈위풍당당 행진곡〉으로 자주 소개되는 영국 작곡가입니다." },
-      { country: "미국", composer: "거슈윈", desc: "재즈와 클래식을 결합한 〈랩소디 인 블루〉의 작곡가입니다." },
-      { country: "스페인", composer: "알베니스", desc: "피아노 모음곡 〈이베리아〉로 알려진 스페인 민족주의 작곡가입니다." },
-      { country: "브라질", composer: "빌라-로보스", desc: "브라질 민요와 클래식을 결합한 〈바치아나스 브라질레이라스〉를 작곡했습니다." },
-      { country: "아르헨티나", composer: "피아졸라", desc: "탱고를 현대적으로 재해석한 ‘누에보 탱고’의 대표 작곡가입니다." },
-      { country: "일본", composer: "다케미츠 토루", desc: "동양적 정서와 현대 음악을 결합한 작품으로 알려져 있습니다." },
-      { country: "중국", composer: "탄둔", desc: "영화 〈와호장룡〉 음악과 현대 관현악 작품으로 잘 알려져 있습니다." },
-      { country: "그리스", composer: "테오도로키스", desc: "영화 〈그리스인 조르바〉의 음악으로 유명합니다." },
-      { country: "호주", composer: "퍼시 그레인저", desc: "〈민요 모음곡〉 등 민요를 바탕으로 한 작품을 쓴 작곡가입니다." },
-      { country: "대한민국", composer: "윤이상", desc: "서양 현대음악 기법을 사용해 한국적 소재를 표현한 작곡가입니다." },
-      { country: "미국", composer: "코플런드", desc: "〈애팔래치아의 봄〉 등 미국 풍경을 담은 음악으로 유명합니다." },
-      { country: "오스트리아", composer: "슈베르트", desc: "〈송어〉, 〈마왕〉 등 예쁜 가곡을 많이 남긴 낭만주의 작곡가입니다." },
-      { country: "독일", composer: "바흐", desc: "바로크 시대를 대표하는 작곡가로, 〈G선상의 아리아〉 등이 유명합니다." }
-    ];
-    // 🔼🔼 여기만 바꾸면 칸 구성이 전부 바뀝니다 🔼🔼
-
-    // 7x7 격자의 테두리 좌표 (시계 방향)
-    const perimeterCoords = [];
-    // 위쪽 줄 (0,0~6)
-    for (let c = 0; c < 7; c++) perimeterCoords.push({ r: 0, c });
-    // 오른쪽 줄 (1~5,6)
-    for (let r = 1; r < 6; r++) perimeterCoords.push({ r, c: 6 });
-    // 아래쪽 줄 (6,5~0)
-    for (let c = 5; c >= 0; c--) perimeterCoords.push({ r: 6, c });
-    // 왼쪽 줄 (5~1,0)
-    for (let r = 5; r >= 1; r--) perimeterCoords.push({ r, c: 0 });
-
-    const boardEl = document.getElementById("board");
-    const posText = document.getElementById("pos-text");
-    const visitedCountEl = document.getElementById("visited-count");
-    const logEl = document.getElementById("log");
-    const infoEl = document.getElementById("info");
-    const rollBtn = document.getElementById("roll-btn");
-
-    let position = 0;             // 0~23
-    const visited = new Array(tileData.length).fill(false);
-
-    const tileElements = [];
-
-    function drawBoard() {
-      // 타일 생성
-      tileData.forEach((tile, idx) => {
-        const coord = perimeterCoords[idx];
-        const div = document.createElement("div");
-        div.className = "tile";
-        div.style.gridRow = coord.r + 1;
-        div.style.gridColumn = coord.c + 1;
-        div.dataset.index = idx;
-
-        const label = document.createElement("div");
-        label.className = "tile-label";
-        label.textContent = tile.country;
-        div.appendChild(label);
-
-        const comp = document.createElement("div");
-        comp.className = "tile-composer";
-        comp.textContent = tile.composer;
-        div.appendChild(comp);
-
-        const index = document.createElement("div");
-        index.className = "tile-index";
-        index.textContent = idx;
-        div.appendChild(index);
-
-        boardEl.appendChild(div);
-        tileElements.push(div);
-      });
-
-      updateActiveTile();
+      font-size: 0.92rem;
+      color: #55566f;
+      line-height: 1.6;
     }
 
-    function updateActiveTile() {
-      tileElements.forEach((el, i) => {
-        el.classList.toggle("active", i === position);
-      });
-      posText.textContent = position;
-      visited[position] = true;
-      const visitedCount = visited.filter(v => v).length;
-      visitedCountEl.textContent = visitedCount;
-      showInfo(position);
+    .label-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .label-row > div {
+      flex: 1 1 160px;
+      font-size: 0.9rem;
+      color: #4f506b;
+    }
+    .label-row strong {
+      display: inline-block;
+      min-width: 60px;
     }
 
-    function showInfo(index) {
-      const tile = tileData[index];
-      infoEl.innerHTML = `
-        <div class="info-line"><span class="info-label">나라:</span> ${tile.country}</div>
-        <div class="info-line"><span class="info-label">대표 작곡가:</span> ${tile.composer}</div>
-        <div class="info-desc">${tile.desc}</div>
-        <div class="small">
-          ➜ 수업에서는 “이 작곡가의 대표 작품은 무엇일까?”, “이 나라의 음악적 특징은?” 같은 퀴즈를 이어서 질문해 보세요.
-        </div>
-      `;
+    .info-box {
+      font-size: 0.88rem;
+      background: linear-gradient(135deg, #eef3ff, #f9f2ff);
+      border-radius: 14px;
+      padding: 10px 12px;
+      margin-top: 10px;
+      color: #4b4c71;
+      border: 1px solid #dde3ff;
+    }
+    .info-box b {
+      color: #454776;
     }
 
-    function rollDice() {
-      const dice = Math.floor(Math.random() * 6) + 1; // 1~6
-      const oldPos = position;
-      position = (position + dice) % tileData.length;
-      updateActiveTile();
-      const tile = tileData[position];
-      logEl.textContent = `🎲 ${dice}이(가) 나와서 ${oldPos}번 칸에서 ${position}번 칸으로 이동했습니다. 도착: ${tile.country} - ${tile.composer}`;
+    .rubric-title {
+      font-weight: 700;
+      font-size: 0.96rem;
+      margin-bottom: 8px;
+      color: #484a7d;
     }
 
-    drawBoard();
-    rollBtn.addEventListener("click", rollDice);
-  </script>
-</body>
-</html>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 6px;
+      font-size: 0.83rem;
+      table-layout: fixed;
+    }
+    th, td {
+      border: 1px solid #e4e6fa;
+      padding: 7px 6px;
+      text-align: center;
+      word-break: keep-all;
+    }
+    th {
+      background: linear-gradient(135deg, #f4f6ff, #fdf5ff);
+      font-weight: 600;
+      color: #50527b;
+    }
 
 
