@@ -1,28 +1,101 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>김영후의 음악교실</title>
-  </head>
-  <body>
-    <div id="app">
-      <div class="profile-container">
-        <header class="profile-header">
-          <h1>김영후의 음악교실</h1>
-        </header>
-        <section class="profile-intro">
-          <p id="intro-text">여기에 간단한 자기 소개를 입력하세요.</p>
-        </section>
-        <section class="profile-career">
-          <h2>경력</h2>
-          <ul id="career-list">
-            <li>경력을 추가하세요.</li>
-          </ul>
-        </section>
-      </div>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>가창 상호평가 앱</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+
+<body>
+<div class="app">
+  <h1>가창 상호평가 앱</h1>
+  <p class="subtitle">
+    반별 친구의 가창점수를 아래 루브릭에 따라 1~5점으로 평가하고,<br>
+    각 칸에 붙여넣으세요. <b>본인도 평가</b>합니다.
+  </p>
+
+  <!-- 루브릭 상단 안내 -->
+  <div class="rubric-box">
+    <div class="rubric-title">📝 가창 루브릭 (4개 영역)</div>
+    <ul>
+      <li><b>음정 정확도</b> – 음의 정확성</li>
+      <li><b>리듬 정확도</b> – 박자와 리듬의 안정성</li>
+      <li><b>발음·가사 전달</b> – 가사가 또렷하게 들리는 정도</li>
+      <li><b>표현·태도</b> – 감정 표현, 자세, 무대 태도</li>
+    </ul>
+    <p style="font-size:0.8rem;color:#777;margin-top:6px;">
+      점수: 5(아주 좋음) · 4(좋음) · 3(보통) · 2(미흡) · 1(많이 보완 필요)
+    </p>
+  </div>
+
+  <!-- 평가자 학번 -->
+  <div class="input-row">
+    <label>내 학번 (5자리: 예 30401)</label><br>
+    <input id="myId" type="text" maxlength="5" placeholder="30401">
+  </div>
+
+  <!-- 평가할 친구 번호 -->
+  <div class="input-row">
+    <label>평가할 친구 번호 (1~30)</label><br>
+    <input id="targetNum" type="number" min="1" max="30" placeholder="1~30">
+  </div>
+
+  <!-- 한줄 평가 입력 -->
+  <div class="input-row">
+    <label>한줄평 (자기평가/상호평가)</label><br>
+    <input id="comment" type="text" class="wide-input"
+           placeholder="예: 음정이 안정적이고 태도가 좋았어요.">
+  </div>
+
+  <!-- 점수 선택 영역 -->
+  <div class="score-section">
+    <div class="score-row">
+      <div class="score-label">음정 정확도</div>
+      <div class="score-buttons" data-type="pitch"></div>
     </div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+
+    <div class="score-row">
+      <div class="score-label">리듬 정확도</div>
+      <div class="score-buttons" data-type="rhythm"></div>
+    </div>
+
+    <div class="score-row">
+      <div class="score-label">발음·가사 전달</div>
+      <div class="score-buttons" data-type="pron"></div>
+    </div>
+
+    <div class="score-row">
+      <div class="score-label">표현·태도</div>
+      <div class="score-buttons" data-type="express"></div>
+    </div>
+  </div>
+
+  <button id="saveBtn">입력하기 (내 점수표에 반영)</button>
+
+  <!-- 결과 출력: 점수 -->
+  <div class="result-box">
+    <div class="result-title">① 우리반 친구들의 가창 점수</div>
+    <textarea id="scoreResult" readonly></textarea>
+  </div>
+
+  <!-- 결과 출력: 한줄평 -->
+  <div class="result-box">
+    <div class="result-title">② 우리반 친구들의 가창 한줄 평가</div>
+    <textarea id="commentResult" readonly></textarea>
+  </div>
+
+  <button id="submitGoogleBtn">최종제출하기</button>
+  <div class="submit-hint">
+    · 위 내용을 자동으로 구글 설문에 제출합니다.<br>
+    · 제출 후에는 선생님 안내에 따라 설문 제출 여부를 확인하세요.
+  </div>
+
+  <!-- 구글 폼 제출용 숨김 iframe -->
+  <iframe name="hidden_iframe" style="display:none;"></iframe>
+</div>
+
+<script type="module" src="/src/main.js"></script>
+
+</body>
 </html>
